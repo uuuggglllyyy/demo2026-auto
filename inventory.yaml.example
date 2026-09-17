@@ -1,0 +1,87 @@
+# inventory.yaml.example
+# Скопируй в inventory.yaml и правь под свой вариант:
+#   cp inventory.yaml.example inventory.yaml
+
+domain: "au-team.irpo"
+timezone: "Asia/Yekaterinburg"
+
+pass_user: "P@ssw0rd"
+
+ssh_user: "sshuser"
+ssh_port_srv: 2011
+
+hosts:
+  hq-rtr:
+    ip: "192.168.100.1"
+    user: "root"
+    port: 22
+    fqdn: "hq-rtr.au-team.irpo"
+    role: "router"
+    iface_wan: "ens18"
+    iface_lan: "ens20"
+    ip_wan: "172.16.10.2/28"
+    ip_lan: "192.168.100.1/26"
+    gre_local: "172.16.10.2"
+    gre_remote: "172.16.20.2"
+    gre_ip: "10.10.10.1/30"
+    gre_iface: "gre1"
+
+  br-rtr:
+    ip: "192.168.200.1"
+    user: "root"
+    port: 22
+    fqdn: "br-rtr.au-team.irpo"
+    role: "router"
+    iface_wan: "ens18"
+    iface_lan: "ens19"
+    ip_wan: "172.16.20.2/28"
+    ip_lan: "192.168.200.1/26"
+    gre_local: "172.16.20.2"
+    gre_remote: "172.16.10.2"
+    gre_ip: "10.10.10.2/30"
+    gre_iface: "gre1"
+
+  hq-srv:
+    ip: "192.168.100.2"
+    user: "sshuser"
+    port: 22
+    fqdn: "hq-srv.au-team.irpo"
+    role: "server"
+
+  br-srv:
+    ip: "192.168.200.2"
+    user: "sshuser"
+    port: 22
+    fqdn: "br-srv.au-team.irpo"
+    role: "server"
+
+  hq-cli:
+    ip: "192.168.100.3"
+    user: "user"
+    port: 22
+    fqdn: "hq-cli.au-team.irpo"
+    role: "client"
+
+users:
+  - name: "sshuser"
+    uid: 2011
+    password: "P@ssw0rd"
+    sudo_nopasswd: true
+    hosts: ["hq-srv", "br-srv"]
+  - name: "net_admin"
+    uid: 2012
+    password: "P@ssw0rd"
+    sudo_nopasswd: true
+    hosts: ["hq-rtr", "br-rtr"]
+
+dns_server: "192.168.100.2"
+
+dhcp:
+  iface: "ens20"
+  subnet: "192.168.100.0"
+  netmask: "255.255.255.192"
+  range_start: "192.168.100.10"
+  range_end: "192.168.100.60"
+  gateway: "192.168.100.1"
+  dns: "192.168.100.2"
+  domain: "au-team.irpo"

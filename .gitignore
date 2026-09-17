@@ -1,0 +1,21 @@
+# Логи
+logs/
+*.log
+
+# Личный inventory с паролями
+inventory.yaml
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+
+# ОС
+.DS_Store
+Thumbs.db
+EOF
